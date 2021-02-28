@@ -1,0 +1,102 @@
+/*
+Thérorie:
+forme verbale= racine + schème + affixes
+Le verbe possède 4 thèmes: aoriste, aoriste intensif (inaccompli), prétérit (accompli), prétérit négatif
+2 groupes de verbes:
+1. les verbes faibles: aoriste == prétérit (eg. urar = (y)-urar)
+2. les verbes forts: aorise != prétérit (eg. afeg  != yufeg)
+
+2 types de verbes:
+1. verbes ordinaires
+2. verbes d'état / qualité
+
+Les principaux schèmes:
+1. R1r2eR3 : tyle lmed
+2. R1eR2R2eR3: type beddel
+3. R1R2u: type cfu
+
+Conjugaison:
+type 1: bleγ /kcem
+belγeγ        kecmeγ                  --(e)γ 
+tbelγeḍ       tkecmeḍ                 t(e) ---(e)ḍ
+i/yebleγ      yekcem                  i/y(e)-----
+tebleγ        tekcem                  t(e)-----
+nebleγ        nekcem                  n(e)------
+tbelγem/t     tkecmem/t               t(e)----(e)m/t 
+belγen/t      kecmen/t                 ---(e)n/t
+
+
+Algorithm
+1. check the word in a list of verbs (infinitive forms only)
+2. is the word a match?
+if yes: word form is found/returned
+if no:
+3. we know that the word is inflected for person and number. So: 
+3.1. first check if the fist char is i/y/t + e:
+    if yes: 
+        then we have a 3rd pers. sing form. ex. i/yebleγ
+        a. strip the first 2 chars:  i/yebleγ => bleγ
+        b. return the form
+        c. end
+
+    if no:
+        1. check if 1st pers. sing:
+        is 2nd char == 'e' and last char == 'γ':
+           remove last 2 chars: belγeγ => belγ
+           is form.length == 4:
+           if yes:
+                 rewrite form: move 'e' to 3rd position. belγ => bleγ
+
+
+
+strip the last 2 chars (e + inflectional ending)
+for 1st person sing: belγeγ => belγ
+*/
+
+
+2nd type:
+
+type 1: beddel
+beddleγ                          --(e)γ 
+tbeddleḍ                         t(e) ---(e)ḍ
+ibeddel                          i/y(e)-----
+tbeddel                          t(e)-----
+nbeddel                          n(e)------
+tbeddlem/t                       t(e)----(e)m/t 
+beddlen/t                        ---(e)n/t
+
+//function to check if verb form is 1st person sing
+
+
+/*To run code:
+use shortcut Ctrl+Alt+N
+or press F1 and then select/type Run Code,
+or right click the Text Editor and then click Run Code in editor context menu
+or click Run Code button in editor title menu
+or click Run Code button in context menu of file explorer
+
+
+To stop the running code:
+use shortcut Ctrl+Alt+M
+or press F1 and then select/type Stop Code Run
+or right click the Output Channel and then click Stop Code Run in context menu*/
+
+
+3rd type:  cfu   R1R2u   
+// γ  ḍ  č
+
+cfiγ            --iγ
+tecfiḍ          t(e)--iḍ
+i/y/tecfa       i/y/t(e)--a
+necfa           n(e)--a
+tecfam/t        t(e)-- am/t
+cfan/t          --an/t
+
+
+//
+input: inflected form, for example: nekcem, beddleγ, etc 
+first we need to determine the type of verb the form belongs to:
+a. type lmed
+b. type beddel
+c. type cfu
+  
