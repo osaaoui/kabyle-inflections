@@ -86,55 +86,53 @@ var _Inflector = {
 
     }else if(checks.isSecond){
       if(checks.secondVerbType === "lmed"){
-        return this.stripSecondPersonSingInflection(form);
+        return this.stripSecondPersSingTypeLmed(form);
       }else if(checks.secondVerbType === "beddel"){
-       return this.stripSecondPersonSingInflection(form);
+       return this.stripSecondPersSingTypeBeddel(form);
       }else if(checks.secondVerbType === "cfu"){
-        return this.stripSecondPersonSingInflection(form);
+        return this.stripSecondPersSingTypeCfu(form);
        }
     
     
-      }else if(checks.isThird){
-        if(checks.thirdVerbType === "lmed"){
-          return this.stripThirdPersonSingInflection(form);
-        }else if(checks.thirdVerbType === "beddel"){
-         return this.stripThirdPersonSingInflection(form);
-        }else if(checks.thirdVerbType === "cfu"){
-          return this.stripThirdPersonSingInflection(form);
-         }
+    }else if(checks.isThird){
+      if(checks.thirdVerbType === "lmed"){
+        return this.stripThirdPersSingTypeLmed(form);
+      }else if(checks.thirdVerbType === "beddel"){
+        return this.stripThirdPersSingTypeBeddel(form);
+      }else if(checks.thirdVerbType === "cfu"){
+         return this.stripThirdPersSingTypeCfu(form);
+     }
       
       
-        }
-    /*if (secondChar === "e" && lastChar === "γ") {
-      verbType = this.verb_type(thirdChar, fourthChar); //beddleγ
-      return this.isFirstPersonSingular(form, verbType);
-
-
-    } else if (firstChar === "t" && lastChar === "ḍ") {
-      verbType = this.verb_type(fourthChar, fifththChar); //tbeddleḍ
-      return this.isSecondPersonSingular(form, verbType);
-
-
-    } else if (firstChar === "i" ||firstChar === "y" ||(firstChar === "t" && beforeLastChar === "e" && lastChar !== "m")) {
-      verbType = this.verb_type(fourthChar, fifththChar); //tbeddel /ibeddel
-      return this.isThirdPersonSingular(form, firstChar, verbType);
-    } else if (firstChar === "n" && secondChar === "e" && fourthChar !== fifththChar) {
-      //nbeddel
-      console.log("first person plural type lmed");
-      return this.isFirstPersonPlural(form, verbType);
-    } else if (firstChar === "n" && fourthChar === fifththChar) {
-      console.log("first person plural type beddel");
-      verbType = true;
-      return this.isFirstPersonPlural(form, verbType);
-
-      // isSecondPersonPlural: tkecmen/t  tbeddlem/t
-    } else if (firstChar === "t" &&(lastTwoLetters == "em" || lastTwoLetters == "mt")) {
-      verbType = this.verb_type(fourthChar, fifththChar);
-      return this.isSecondPersonPlural(form, lastTwoLetters, verbType);
-    } else if (lastTwoLettersAbs === "en" || lastThreeLetters == "ent") {
-      verbType = this.verb_type(thirdChar, fourthChar); //beddlen
-      return this.isThirdPersonPlural(form, lastTwoLettersAbs, verbType);
-    }*/
+    }else if(checks.isFirstPlur){
+      if(checks.firstPlurVerbType === "lmed"){
+        return this.stripThirdPersSingTypeLmed(form);
+      }else if(checks.firstPlurVerbType === "beddel"){
+         return this.stripThirdPersSingTypeBeddel(form);
+      }else if(checks.firstPlurVerbType === "cfu"){
+        return this.stripThirdPersSingTypeCfu(form);
+      }
+        
+        
+    }else if(checks.isSecondPlur){
+      if(checks.secondPlurVerbType === "lmed"){
+        return this.stripSecondPersPlurTypeLmed(form);
+      }else if(checks.secondPlurVerbType === "beddel"){
+        return this.stripSecondPersPlurTypeBeddel(form);
+      }else if(checks.secondPlurVerbType === "cfu"){
+         return this.stripSecondPersPlurTypeCfu(form);
+      }
+        
+  }else if(checks.isThirdPlur){
+    if(checks.ThirdPlurVerbType === "lmed"){
+      return this.stripThirdPersPlurTypeLmed(form);
+    }else if(checks.ThirdPlurVerbType === "beddel"){
+      return this.stripThirdPersPlurTypeBeddel(form);
+    }else if(checks.ThirdPlurVerbType === "cfu"){
+       return this.stripThirdPersPlurTypeCfu(form);
+    }
+      
+}
   },
 
   //function to check if verb form is 1st person sing
@@ -176,40 +174,44 @@ var _Inflector = {
 
   //beddleγ
   stripFirstPersSingTypeBeddel: function (form) {
-    var stripppedForm = form.slice(0, 5); // beddl
-    stripppedForm = stripppedForm.slice(0, 4) + "e" + stripppedForm.slice(-1); //beddel
+    var strippedForm = "";
+    strippedForm = form.slice(0, 5); // beddl
+    strippedForm = strippedForm.slice(0, 4) + "e" + strippedForm.slice(-1); //beddel
     console.log("type beddel / 1st singular form: " + stripppedForm);
     return stripppedForm;
   },
 
   stripFirstPersSingTypeCfu: function(form){
-    console.log("First person singular. Type: cfu");
-  },
-
-  isSecondPersonSingular: function (form, verbType) {
-    return this.stripSecondPersonSingInflection(form, verbType);
-  },
-
-  stripSecondPersonSingInflection: function (form, verbType) {
     var strippedForm = "";
-
-    strippedForm = form.substr(1, form.length - 3);
-    strippedForm = this.forme_verbale(strippedForm);
-    console.log("verbType " + verbType);
-    if (verbType) {
-      strippedForm =
-        strippedForm.slice(0, 1) +
-        "e" +
-        strippedForm.slice(1, 3) +
-        "e" +
-        strippedForm.slice(-1);
-    } else {
-      strippedForm = strippedForm.slice(0, 2) + "e" + strippedForm.slice(-1);
-      console.log("2nd singular form: " + strippedForm);
-    }
-
+    strippedForm = form.slice(0,2) + 'u'
+    console.log("First person singular: " +strippedForm);
     return strippedForm;
   },
+
+
+  stripSecondPersSingTypeLmed: function(form){
+    var strippedForm = "";
+    strippedForm= form.slice(1,5)
+    strippedForm= strippedForm.slice(0,1) + strippedForm.slice(2,3) + 'e'+strippedForm.slice(-1);
+    
+      console.log("2nd singular form: " + strippedForm);
+      return strippedForm;
+  },
+ 
+  stripSecondPersSingTypeBeddel: function(form){
+    var strippedForm = "";
+    strippedForm= form.slice(1,-2);
+    strippedForm= strippedForm.slice(0, 4)+'e' + strippedForm.slice(-1)
+    console.log("2nd singular form: " + strippedForm);
+    return strippedForm;
+  },
+  stripSecondPersSingTypeCfu: function(form){
+    var strippedForm = "";
+    strippedForm = form.slice(2,4) + 'u'
+      console.log("2nd singular form: " + strippedForm);
+      return strippedForm;
+  },
+
 
   /*function to check if verb form is 3rd person sing
 3.1. first check if the fist char is i/y/t + e:
@@ -218,111 +220,122 @@ var _Inflector = {
         a. strip the first 2 chars:  i/yebleγ => bleγ
         b. return the form
         c. end*/
-  isThirdPersonSingular: function (form, firstChar, verbType) {
-    return this.stripThirdPersonSingInflection(form, firstChar, verbType);
-  },
 
-  stripThirdPersonSingInflection: function (form, firstChar, verbType) {
+  stripThirdPersSingTypeLmed: function(form){ //yekcem
+    console.log("called stripThirdPersSingTypeLmed");
+    var firstChar = form.charAt(0);
     var strippedForm = "";
-    if (verbType) {
-      strippedForm = form.slice(1);
-    } else {
-      if (firstChar === "i") {
-        strippedForm = form.substr(1);
-        console.log("3rd masculine singular form: " + strippedForm);
-      } else {
-        strippedForm = form.substr(2);
-        console.log("3rd feminine singular form: " + strippedForm);
-      }
+    if(firstChar === "i"){
+      strippedForm = form.slice(1,);
+      console.log("3rd person singular: " + strippedForm);
+    }else{
+      strippedForm = form.slice(2,);
+      console.log("3rd person singular: " + strippedForm);
     }
-    return strippedForm;
   },
 
-  ////nbeddel   / nekcem
-  isFirstPersonPlural: function (form, verbType) {
-    return this.stripFirstPersonPluralInflection(form, verbType);
-  },
-
-  // Example: nekcem    strip the first 2 letters = kcem
-  stripFirstPersonPluralInflection: function (form, verbType) {
+  stripThirdPersSingTypeBeddel: function(form){
     var strippedForm = "";
-    if (verbType) {
-      strippedForm = form.slice(1);
-      console.log("1st person plural: " + strippedForm);
-    } else {
-      strippedForm = form.substr(2);
-      console.log("1st person plural: " + strippedForm);
-    }
-
-    return strippedForm;
+    strippedForm = form.slice(1,);
+    console.log("3rd  person singular: " + strippedForm);
   },
+
+  stripThirdPersSingTypeCfu: function(form){
+    var firstChar = form.charAt(0);
+    var strippedForm = "";
+    if(firstChar === "i"){
+      strippedForm = form.slice(1, -1) + "u";
+      console.log("3rd person singular: " + strippedForm);
+    }else{
+      strippedForm = form.slice(2, -1) + "u";
+      console.log("3rd person singular: " + strippedForm);
+    }
+  },
+
+
+// 1st person plural
+  stripFirstPersPlurTypeLmed: function(form){
+    var strippedForm = "";
+    strippedForm = form.slice(2,);
+    console.log("1st person plural: " + strippedForm);
+  },
+
+  stripFirstPersPlurTypeBeddel: function(form){
+    console.log("called stripFirstPersPlurTypeBeddel");
+    var strippedForm = "";
+    strippedForm = form.slice(1,);
+    console.log("1st person plural: " + strippedForm);
+  },
+
+  stripFirstPersPlurTypeCfu: function(form){
+    console.log("called stripFirstPersPlurTypeBeddel");
+    var strippedForm = "";
+    strippedForm = form.slice(2,4) +"u";
+    console.log("1st person plural: " + strippedForm);
+  },
+
+
+  
 
   //2nd person plural
-  isSecondPersonPlural: function (form, lastTwoLetters, verbType) {
-    return this.stripSecondPersonPluralInflection(
-      form,
-      lastTwoLetters,
-      verbType
-    );
-  },
 
-  // Example: tkecmem/t trewlem/t    strip the first 2 letters = kcem
-  stripSecondPersonPluralInflection: function (form, lastTwoLetters, verbType) {
+  stripSecondPersPlurTypeLmed: function(form){
     var strippedForm = "";
-    if (verbType) {
-      lastTwoLetters === "em"
-        ? (strippedForm = form.slice(1, -2))
-        : (strippedForm = form.slice(1, -3));
-      strippedForm = strippedForm.slice(0, -1) + "e" + strippedForm.slice(-1);
-      console.log("2nd person plural: " + strippedForm);
-    } else {
-      strippedForm = form.slice(1, -2);
-      strippedForm = this.forme_verbale(strippedForm);
-      strippedForm = strippedForm.slice(0, 2) + "e" + strippedForm.slice(-1);
-      console.log("2nd person plural: " + strippedForm);
-    }
+    strippedForm = form.slice(1, 5);
+    strippedForm = strippedForm.replace(/e/g, '');
+    strippedForm = strippedForm.slice(0,2) + 'e' + strippedForm.slice(-1);
+    console.log("2nd person plural: " + strippedForm);
     return strippedForm;
+
   },
 
-  //Third person plural  : kecmen
-  isThirdPersonPlural: function (form, lastTwoLettersAbs, verbType) {
-    
-      return this.stripThirdPersonPluralInflection(form, lastTwoLettersAbs, verbType);
-    
+  stripSecondPersPlurTypeBeddel: function(form){
+    var strippedForm = "";
+    strippedForm = form.slice(1, 6);
+    strippedForm = strippedForm.slice(0,4) + 'e' + strippedForm.slice(-1);
+    console.log("2nd person plural: " + strippedForm);
+    return strippedForm;
+   
   },
 
-  // Example: //kecmen/t    strip the last 2 letters = kecm
-  stripThirdPersonPluralInflection: function (form, lastTwoLettersAbs, verbType) {
-    var strippedForm="";
-    var intermedForm="";
-    if(verbType){
-      if(lastTwoLettersAbs ==="en"){
-        intermedForm= form.slice(0, -2);
-        strippedForm= intermedForm .slice(0,-1);
-        strippedForm = strippedForm + 'e' + intermedForm.slice(-1);
-        console.log("3r person plural masculine: " + strippedForm);
-      }else{
-        intermedForm= form.slice(0, -3);
-        strippedForm= intermedForm .slice(0,-1);
-        strippedForm = strippedForm + 'e' + intermedForm.slice(-1);
-        console.log("3r person plural feminine: " + strippedForm);
-      }
+  stripSecondPersPlurTypeCfu: function(form){
+    var strippedForm = "";
+    var lastChar = form.charAt(form.length - 1);
+    if(lastChar === 'm'){
+      strippedForm= form.replace(/[ea]/g, '').slice(1,-1) + "u";
     }else{
-      console.log("Verb type: lmed");
-      if(lastTwoLettersAbs ==="en"){
-        intermedForm= form.slice(0, -2);
-        strippedForm = intermedForm.slice(0,1) + intermedForm.slice(2,3)+"e" + intermedForm.slice(-1);
-        
-        console.log("3r person plural masculine: " + strippedForm);
-      }else{
-        intermedForm= form.slice(0, -3);
-        strippedForm = intermedForm.slice(0,1) + intermedForm.slice(2,3)+"e" + intermedForm.slice(-1);
-        console.log("3r person plural feminine: " + strippedForm);
-      }
-
+      strippedForm= form.replace(/[ea]/g, '').slice(1,-2) + "u";
     }
+    console.log("2nd person plural: " + strippedForm);
+    return strippedForm;
+    
+  },
+
+  stripThirdPersPlurTypeLmed: function(form){
+    var strippedForm="";
+    strippedForm= form.slice(0,4)
+    strippedForm= strippedForm.replace(/e/, '');
+    strippedForm= strippedForm.slice(0,2)+'e'+ strippedForm.slice(-1);
+    console.log("3rd person plural: " + strippedForm);
+    return strippedForm;
+
+  },
+
+  stripThirdPersPlurTypeBeddel: function(form){
+    var strippedForm="";
+    strippedForm= form.slice(0,5);
+    strippedForm = strippedForm.slice(0,-1) + 'e' + strippedForm.slice(-1)
+    console.log("3rd person plural: " + strippedForm);
     return strippedForm;
   },
+
+  stripThirdPersPlurTypeCfu: function(form){
+    var strippedForm="";
+    strippedForm= form.slice(0,2) + 'u';
+    console.log("3rd person plural: " + strippedForm);
+    return strippedForm;
+  },
+ 
   // Anaḍ ussid: aoriste intensif: for example lemmed = lmed
   ussid: function (form) {
     var form_length = form.length; //6

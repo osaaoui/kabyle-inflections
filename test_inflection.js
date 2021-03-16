@@ -4,6 +4,6 @@ const verbForms = require("./verbType");
 
 //inflections.isFirstPersonSingular("tbeddleḍ");
 
-inflections.tawwurt("trewleḍ");
+inflections.tawwurt("tesleb"); 
 
 //verbForms.checkInflections("yecfa");
